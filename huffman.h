@@ -4,18 +4,38 @@
 #include <stdint.h>
 #include <stdio.h>
 
-int huffman_encode_file(FILE* in, FILE* out);
+#ifdef PYTHON
+#include "Python.h"
+#define malloc(...) PyMem_Malloc(__VA_ARGS__)
+#define free(...) PyMem_Free(__VA_ARGS__)
+#endif
 
-int huffman_decode_file(FILE* in, FILE* out);
+#ifdef _WIN32
+#define DLLEXPORT __declspec(dllexport)
+#else
+#define DLLEXPORT extern
+#endif /* _WIN32 */
 
-int huffman_encode_memory(const unsigned char* bufin,
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+DLLEXPORT int huffman_encode_file(FILE* in, FILE* out);
+
+DLLEXPORT int huffman_decode_file(FILE* in, FILE* out);
+
+DLLEXPORT int huffman_encode_memory(const unsigned char* bufin,
 			  uint32_t bufinlen,
 			  unsigned char** pbufout,
 			  uint32_t* pbufoutlen);
 
-int huffman_decode_memory(const unsigned char* bufin,
+DLLEXPORT int huffman_decode_memory(const unsigned char* bufin,
 			  uint32_t bufinlen,
 			  unsigned char** bufout,
 			  uint32_t* pbufoutlen);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef WIN32
+#ifdef _WIN32
 #include <malloc.h>
 extern int getopt(int, char**, char*);
 extern char* optarg;
